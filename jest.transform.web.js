@@ -1,6 +1,6 @@
 const babelJest = require("babel-jest");
 
-module.exports = babelJest.createTransformer({
+const transform = babelJest.createTransformer({
   babelrc: false,
   presets: [
     [
@@ -29,3 +29,8 @@ module.exports = babelJest.createTransformer({
     }
   }
 });
+
+const oldGetCacheKey = transform.getCacheKey;
+transform.getCacheKey = (...args) => 'web' + oldGetCacheKey(...args);
+
+module.exports = transform;
